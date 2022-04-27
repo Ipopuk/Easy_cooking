@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="col-2"></div>
+<div class="col-8">
+    <p>
+    <img src="../{{ recipe.image }}" width=800 height=600>
+    </p>
+    <p></p>
+    <h1>{{ recipe.title }}</h1>
+    {% if recipe.user_id == current_user.id %}
+        <a href="{{ url_for('user.del_recipe', recipe_id=recipe.id) }}"><img src=".././static/images/delete.png" width="40" nheight="40"></a>
+    {% endif %}
+    <h3>Ингредиенты</h3>
+    <ul>
+        {% for i in recipe.ingredients.split('\n') %}
+            <li>{{ i }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Рецепт</h3>
+    <p>{{ recipe.recipe}}</p>
+</div>
+
+{% endblock %}

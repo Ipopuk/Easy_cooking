@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="row">
+    <div class="col-2"></div>
+    <div class="col-9">
+    {% for row in range(0, recipes|length, 3) %}
+        <div class="row">
+            {% for col in range(row, row+3) %}
+            {% if col < recipes|length %}
+                <div class="col-4">
+                    <div class="card" style="width: 18rem; height: 30rem;">
+                        <a href="{{ url_for('user.show_recipe', recipe_id=recipes[col].id) }}">
+                        <img src="{{recipes[col].image}}" class="card-img-top" alt="...">
+                        </a>
+                        <div class="card-body">
+                            <p class="card-text">{{ recipes[col].title }}</p>
+                            <p>
+                            <ul>
+                                {% for r in recipes[col].ingredients.split('\n')[:3] %}
+                                <li>
+                                    {{ r }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <a href="{{ url_for('user.show_recipe', recipe_id=recipes[col].id) }}"><button type="button" class="btn btn-success" name="submit_button">Далее</button></a>
+                            {% if recipes[col].id|string in current_user.wishlist.split(';') %}
+                                <a href="{{ url_for('user.remove_from_fav', recipe_id=recipes[col].id) }}"><img src="./static/images/fav.png" width=30 height=30></a>
+                            {% else %}
+                                <a href="{{ url_for('user.add_to_fav', recipe_id=recipes[col].id) }}"><img src="./static/images/no_fav.png" width=30 height=30></a>
+                            {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <p></p>
+    {% endfor %}
+</div>
+        
+{% endblock %}

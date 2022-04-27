@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block content %}
+<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="row">
+    <div class="col-2"></div>
+    <div class="col-9">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="row">
+                {% for i in range(3) %}
+                <div class="col-4">
+                    <div class="card" style="width: 18rem; height: 30rem;">
+                        <a href="{{ url_for('user.show_recipe', recipe_id=recipes[i].id) }}">
+                        <img src="{{recipes[i].image}}" class="card-img-top" alt="...">
+                        </a>
+                        <div class="card-body">
+                          <p class="card-text">{{ recipes[i].title }}</p>
+                          <p>
+                            <ul>
+                              {% for r in recipes[i].ingredients.split('\n')[:3] %}
+                                <li>
+                                  {{ r }}
+                                </li>
+                              {% endfor %}
+                            </ul>
+                            <a href="{{ url_for('user.show_recipe', recipe_id=recipes[i].id) }}"><button type="button" class="btn btn-success" name="submit_button">Далее</button></a>
+                            {% if recipes[i].id|string in current_user.wishlist.split(';') %}
+                              <a href="{{ url_for('user.remove_from_fav', recipe_id=recipes[i].id) }}"><img src="./static/images/fav.png" width=30 height=30></a>
+                            {% else %}
+                              <a href="{{ url_for('user.add_to_fav', recipe_id=recipes[i].id) }}"><img src="./static/images/no_fav.png" width=30 height=30></a>
+                            {% endif %}
+                          </p>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% for i in range(3, recipes|length, 3) %}
+        <div class="carousel-item">
+            <div class="row">
+                {% for j in range(i, i+3) %}
+                <div class="col-4">
+                    <div class="card" style="width: 18rem; height: 30rem;">
+                      <a href="{{ url_for('user.show_recipe', recipe_id=recipes[j].id) }}">
+                        <img src="{{recipes[j].image}}" class="card-img-top" alt="...">
+                      </a>
+                        <div class="card-body">
+                          <p class="card-text">{{ recipes[j].title }}</p>
+                          <p>
+                            <ul>
+                              {% for r in recipes[j].ingredients.split('\n')[:3] %}
+                                <li>
+                                  {{ r }}
+                                </li>
+                              {% endfor %}
+                            </ul>
+                            <a href="{{ url_for('user.show_recipe', recipe_id=recipes[j].id) }}"><button type="button" class="btn btn-success" name="submit_button">Далее</button></a>
+                            {% if recipes[j].id|string in current_user.wishlist.split(';') %}
+                              <a href="{{ url_for('user.remove_from_fav', recipe_id=recipes[j].id) }}"><img src="./static/images/fav.png" width=30 height=30></a>
+                            {% else %}
+                              <a href="{{ url_for('user.add_to_fav', recipe_id=recipes[j].id) }}"><img src="./static/images/no_fav.png" width=30 height=30></a>
+                            {% endif %}
+                          </p>
+                        </div>
+                    </div>
+                  </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  </div>
+  </div>
+{% endblock %}

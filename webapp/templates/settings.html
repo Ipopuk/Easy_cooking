@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-4"></div>
+<div class="col-4">
+<form action="{{ url_for('user.save_settings') }}" method="post">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        {{ form.username.label }}<br>
+        {{ form.username() }}
+    </div>
+    <div class="form-group">
+        {{ form.email.label }}<br>
+        {{ form.email() }}
+    </div>
+    <div class="form-group">
+        Введите новый пароль<br>
+        {{ form.password() }}
+    </div>
+    <div class="form-group">
+        Подтвердите новый пароль
+        {{ form.password2() }}
+    </div>
+    <p></p>
+    <button type="submit" class="btn btn-success" name="submit_button">Сохранить</button>
+        
+</form>
+</div>
+{% endblock %}

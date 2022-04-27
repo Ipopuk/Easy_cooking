@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<p></p>
+<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+  <div class="row">
+  <div class="col-1"></div>
+  <div class="col-10">
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="10000">
+        <img src="{{ recipes[0].image }}" class="d-block w-75" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>{{ recipes[0].title }}</h5>
+          <p>
+            <ul>
+              {% for r in recipes[0].ingredients.split('\n') %}
+                <li>
+                  {{ r }}
+                </li>
+              {% endfor %}
+            </ul>
+            <a href="{{ url_for('user.show_recipe', recipe_id=recipes[0].id) }}"><button type="button" class="btn btn-success" name="submit_button">Далее</button></a>
+            {% if recipes[0].id|string in current_user.wishlist.split(';') %}
+              <a href="{{ url_for('user.remove_from_fav', recipe_id=recipes[0].id) }}"><img src="./static/images/fav.png" width=30 height=30></a>
+            {% else %}
+              <a href="{{ url_for('user.add_to_fav', recipe_id=recipes[0].id) }}"><img src="./static/images/no_fav.png" width=30 height=30></a>
+            {% endif %}
+          </p>
+        </div>
+      </div>
+      {% for recipe in recipes[1:] %}
+        <div class="carousel-item" data-bs-interval="2000">
+            <img src="{{ recipe.image }}" class="d-block w-75" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+            <h5>{{ recipe.title }}</h5>
+            <p>
+                <ul>
+                {% for r in recipe.ingredients.split('\n') %}
+                    <li>
+                    {{ r }}
+                    </li>
+                {% endfor %}
+                </ul>
+                <a href="{{ url_for('user.show_recipe', recipe_id=recipe.id) }}"><button type="button" class="btn btn-success" name="submit_button">Далее</button></a>
+                {% if recipe.id|string in current_user.wishlist.split(';') %}
+                  <a href="{{ url_for('user.remove_from_fav', recipe_id=recipe.id) }}"><img src="./static/images/fav.png" width=30 height=30></a>
+                {% else %}
+                  <a href="{{ url_for('user.add_to_fav', recipe_id=recipe.id) }}"><img src="./static/images/no_fav.png" width=30 height=30></a>
+                {% endif %}
+            </p>
+            </div>
+        </div>
+      {% endfor %}
+    </div>
+    </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+{% endblock %}
