@@ -126,7 +126,6 @@ def choose_func():
 def save_recipe(form):
     title = request.form['title']
     recipe = request.form['recipe']
-    print(request.files)
     image = request.files['file']
     filename = secure_filename(image.filename)
     basedir = os.path.dirname(__file__)
@@ -155,7 +154,6 @@ def save_recipe(form):
 @blueprint.route('/recipe/<int:recipe_id>')
 def show_recipe(recipe_id):
     recipe = Recipe.query.filter_by(id=recipe_id).first()
-    print(recipe.image)
     if not recipe:
         abort(404)
     return render_template(
